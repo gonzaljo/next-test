@@ -12,4 +12,4 @@ services:
       - "3000"
     ports: # use if it is necessary to expose the container to the host machine
       - "3000:3000"
-    command: "npm build & npm start"
+    command: "npm build & & npm start"
