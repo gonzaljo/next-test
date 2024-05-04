@@ -1,15 +1,31 @@
-version: "2"
+version: '3.1'
+
 services:
-  node:
-    image: "node:20"
-    user: "node"
-    working_dir: /home/node/app
+
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - 8080:80
     environment:
-      - NODE_ENV=production
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wpuser
+      WORDPRESS_DB_PASSWORD: 65#"34SRedfZ43 
+      WORDPRESS_DB_NAME: wpdb
     volumes:
-      - ./:/home/node/app
-    expose:
-      - "3000"
-    ports: # use if it is necessary to expose the container to the host machine
-      - "3000:3000"
-    command: "npm build & & npm start"
+      - wordpress:/var/www/html
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: wpdb
+      MYSQL_USER: wpuser
+      MYSQL_PASSWORD: 65#"34SRedfZ43
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - db:/var/lib/mysql
+
+volumes:
+  wordpress:
+  db:
